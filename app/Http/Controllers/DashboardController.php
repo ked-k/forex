@@ -1,0 +1,193 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Transactions;
+use App\Models\Transfer;
+use App\Models\Account;
+use App\Models\Currency;
+use App\Models\customer;
+use App\Models\Payement;
+use App\Models\supplier;
+use App\Models\Expenditure;
+use App\Models\capitalTransactions;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
+
+class DashboardController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $tdate = date('Y-m-d');
+        $syear = date("Y");
+        $smonth = date("M-Y");
+        $sweek = date("Y-M-W");
+        $TotalAcounts = Account::count('id');
+        $Totalsales =Transactions::where('t_type','sale')->sum('total_amount');
+        $TotalCashsales =Transactions::where('sale_type','Cash')->sum('total_amount');
+        $TotalCreditsales =Transactions::where('sale_type','Credit')->sum('total_amount');
+        $TotalsalesDaily =Transactions::where('t_type','sale')->where('date_added', $tdate)->sum('total_amount');
+        $TotalsalesWeekly =Transactions::where('t_type','sale')->where('trans_week', $sweek)->sum('total_amount');
+        $TotalsalesMonthly =Transactions::where('t_type','sale')->where('trans_month', $smonth)->sum('total_amount');
+        $TotalsalesYearly =Transactions::where('t_type','sale')->where('trans_year', $syear)->sum('total_amount');
+
+        DB::statement("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
+        $TotalsalesByCur =Transactions::where('t_type','sale')
+        ->leftJoin('currencies','transactions.currency_id','=','currencies.id')
+        ->groupBy(['currency_id'])->select('currency_name','currency_country', DB::raw('sum(total_amount) as totalamount'))->get();
+
+        $TotalsalesByAcct =Transactions::where('t_type','sale')
+        ->leftJoin('accounts','transactions.from_id','=','accounts.id')
+        ->groupBy(['from_id'])->select('account_name','account_number', DB::raw('sum(total_amount) as totalamount'))->paginate(8);
+
+        $Totalsalesbar =Transactions::where('t_type','sale')
+        ->groupBy(['trans_month'])->select('trans_month', DB::raw('sum(total_amount) as totalamount'))
+        ->limit(12)->get();
+
+        $Totalsalesday =Transactions::where('t_type','sale')
+        ->groupBy(['date_added'])->select('date_added', DB::raw('sum(total_amount) as totalamount'))
+        ->limit(5)->get();
+
+        $Expenses =Expenditure::groupBy(['date_added'])->select('date_added', DB::raw('sum(exp_amount) as totalamount'))
+        ->limit(5)->get();
+
+        if (count($Totalsalesbar)>0){
+        foreach($Totalsalesbar as $data){
+            $month[] = $data->trans_month;
+            $amount[] = $data->totalamount;
+           }
+           $month= json_encode($month,JSON_NUMERIC_CHECK);
+            $amount = json_encode($amount,JSON_NUMERIC_CHECK);
+        }else{
+                $month="0";
+                $amount="0";
+
+            }
+
+            if (count($Totalsalesday)>0){
+            foreach($Totalsalesday as $data){
+                $dmonth[] = $data->date_added;
+                $damount[] = $data->totalamount;
+                }
+                $dmonth= json_encode($dmonth,JSON_NUMERIC_CHECK);
+                $damount = json_encode($damount,JSON_NUMERIC_CHECK);
+            }else{
+                    $dmonth="0";
+                    $damount="0";
+
+                }
+
+                if (count($Expenses)>0){
+                    foreach($Expenses as $data){
+                        $emonth[] = $data->date_added;
+                        $eamount[] = $data->totalamount;
+                        }
+                        $emonth= json_encode($emonth,JSON_NUMERIC_CHECK);
+                        $eamount = json_encode($eamount,JSON_NUMERIC_CHECK);
+                    }else{
+                            $emonth="0";
+                            $eamount="0";
+
+                        }
+        //return $Totalsalesbar;
+
+        DB::statement("SET sql_mode=(SELECT CONCAT(@@sql_mode, ',ONLY_FULL_GROUP_BY'));");
+        return view('forex.dashboard', compact('eamount','emonth','damount','dmonth','amount','month','TotalsalesByAcct','TotalsalesByCur','TotalsalesYearly','TotalsalesMonthly','TotalsalesWeekly','TotalsalesDaily','TotalAcounts','Totalsales','TotalCashsales','TotalCreditsales'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function reset()
+    {
+        DB::statement("SET foreign_key_checks=0");
+        // Artisan::call('backup:run');
+        // $path = storage_path('mydbbackup/*');
+        // $latest_ctime = 0;
+        // $latest_filename = '';
+        // $files = glob($path);
+        // foreach($files as $file)
+        // {
+        //         if (is_file($file) && filectime($file) > $latest_ctime)
+        //         {
+        //                 $latest_ctime = filectime($file);
+        //                 $latest_filename = $file;
+        //         }
+        // }
+        Currency::truncate();
+        Account::truncate();
+        Expenditure::truncate();
+        Transactions::truncate();
+        Transfer::truncate();
+        customer::truncate();
+        supplier::truncate();
+        Payement::truncate();
+        capitalTransactions::truncate();
+        DB::statement("SET foreign_key_checks=1");
+        return redirect('forex/dashboard')->with('success', 'All Records where successfully deleted !!');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}
