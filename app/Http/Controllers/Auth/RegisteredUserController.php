@@ -39,10 +39,10 @@ class RegisteredUserController extends Controller
     public function deleteUser($id)
     {
         try {
-            DB::transaction(function () use ($id) {
+            // DB::transaction(function () use ($id) {
                $user = User::where('id',$id)->delete();
                return redirect()->back()->with('success', 'User Record Successfully deleted!!');
-            });
+            // });
         } catch (\Exception $error) {
             $user = User::where('id',$id)->first();
             if($user){
