@@ -84,7 +84,7 @@ class CurrencyController extends Controller
         $request->validate([
             'currency_name'=> 'required',
             'currency_country'=> 'required',
-            'buying_rate'=> 'required|numeric',
+            // 'buying_rate'=> 'required|numeric',
             // 'selling_rate'=> 'required|numeric',
             // 'usd_exrate'=> 'required|numeric',
 

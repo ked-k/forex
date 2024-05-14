@@ -99,7 +99,7 @@
                                                 <td class="table-action">
                                                     <a href="#" class="action-icon" data-bs-toggle="modal" data-bs-target="#viewUser{{$user->uid}}"> <i class="bx bx-eye"></i></a>
                                                     <a href="#" class="action-icon" data-bs-toggle="modal" data-bs-target="#editUser{{$user->uid}}"> <i class="bx bx-edit" ></i></a>
-                                                    {{-- <a href="#" class="action-icon"> <i class="mdi mdi-delete"></i></a> --}}
+                                                    <a onclick="return confirm('Are you sure you want to delete?');" href="{{route('removeUser',$user->id)}}"  data-toggle="tooltip" title="Delete!" class="action-icon"> <i class="bx bx-trash"></i></a>
                                                 </td>
                                             </tr>
                                             @endforeach                                                  

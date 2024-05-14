@@ -21,10 +21,11 @@
                                                                             <label for="currency_country" class="form-label">Country Name</label>
                                                                             <input type="text" id="currency_country"  class="form-control" name="currency_country" value="{{old('currency_country')}}">
                                                                         </div>
-                                                                        <div class="mb-3">
+                                                                        <input type="hidden" id="buying_rate"  class="form-control" name="buying_rate"  value="0">
+                                                                        {{-- <div class="mb-3">
                                                                             <label for="buying_rate" class="form-label">Buying Rate</label>
                                                                             <input type="text" id="buying_rate"  class="form-control" name="buying_rate" onchange="fillm()" value="{{old('buying_rate')}}">
-                                                                        </div>
+                                                                        </div> --}}
                                                                         {{-- <div class="mb-3">
                                                                             <label for="selling_rate" class="form-label">Selling Rate</label>
                                                                             <input type="text" id="selling_rate" class="form-control" name="selling_rate" onchange="fillm()" value="{{old('selling_rate')}}">

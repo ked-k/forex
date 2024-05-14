@@ -22,6 +22,7 @@ Route::resource('users',RegisteredUserController::class)->middleware(['auth','ro
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->middleware(['auth','role:superadministrator|administrator|user'])->name('dashboard');
 Route::group(['namespace' => 'forex','middleware' => ['auth','role:superadministrator|administrator|user'], 'prefix' => 'forex' ], function() {
 
+    Route::get('/user/delete/{id}', [RegisteredUserController::class, 'deleteUser'])->middleware(['auth','role:superadministrator|administrator|user'])->name('removeUser');
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index']);
     Route::get('/reset', [App\Http\Controllers\DashboardController::class, 'reset']);
 

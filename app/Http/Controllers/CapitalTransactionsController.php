@@ -105,7 +105,7 @@ class CapitalTransactionsController extends Controller
 
         // Calculate the new average buying rate
         
-        if($currentBuyingRate>1){
+        if($currentBuyingRate>0.1){
         $newAverageBuyingRate = ($currentBuyingRate + $newBuyingRate) / 2;
         }else{
             $newAverageBuyingRate = $newBuyingRate;

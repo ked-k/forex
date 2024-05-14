@@ -33,7 +33,7 @@
                                                     <th>No.</th>
                                                     <th>Currency Name</th>
                                                     <th>Country</th>
-                                                    <th>Buying Rate</th>
+                                                    {{-- <th>Buying Rate</th> --}}
                                                     {{-- <th>Selling Rate</th>
                                                     <th>%-Rate</th> --}}
                                                     <th>Action</th>
@@ -47,7 +47,7 @@
                                                     <td>{{$i++}}</td>
                                                     <td>{{ $value->currency_name}}</td>
                                                     <td>{{ $value->currency_country}}</td>
-                                                    <td>{{ $value->buying_rate}}</td>
+                                                    {{-- <td>{{ $value->buying_rate}}</td> --}}
                                                     {{-- <td>{{ $value->selling_rate}}</td>
                                                     <td>{{ $value->usd_exrate}}  </td> --}}
                                                     <td class="table-action">
@@ -83,10 +83,10 @@
                                                                                             <label for="currency_country" class="form-label">Country Name</label>
                                                                                             <input type="text" id="currency_country" value="{{ $value->currency_country}}" class="form-control" name="currency_country">
                                                                                         </div>
-                                                                                        <div class="mb-3">
+                                                                                        {{-- <div class="mb-3">
                                                                                             <label for="buying_rate" class="form-label">Buying Rate</label>
                                                                                             <input type="text" id="buying_rate" value="{{ $value->buying_rate}}" class="form-control" name="buying_rate">
-                                                                                        </div>
+                                                                                        </div> --}}
                                                                                         {{-- <div class="mb-3">
                                                                                             <label for="selling_rate" class="form-label">Selling Rate</label>
                                                                                             <input type="text" id="selling_rate" value="{{ $value->selling_rate}}" class="form-control" name="selling_rate">

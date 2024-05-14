@@ -31,7 +31,7 @@
                                             <input type="hidden" class="form-control" name="reff_number"  readonly value="{{ $code }}">
                                             <div class="col-sm-3">
 
-                                                    <label class="form-label">Sale Type</label>
+                                                    <label class="form-label">Purchase Type</label>
                                                     <select name="sale_type" id="saleType" class="form-control" onchange="mycust()">
                                                         <option selected value="Purchase_paid">Paid</option>
                                                         <option value="Purchase_credit">Credit</option>
@@ -210,7 +210,7 @@
                                             </div><!-- end col-->
                                              <div class="col-sm-3">
                                                  <div class="text-sm">
-                                                     <label>Total Amount (UGX)</label>
+                                                     <label>Total Amount</label>
                                                      <input type="text" readonly required class="form-control" name="total_amount" id="total_amount">
                                                  </div>
                                              </div>

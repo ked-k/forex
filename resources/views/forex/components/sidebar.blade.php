@@ -40,9 +40,9 @@
             </a>
             <ul>
 
-                <li> <a href="{{url('forex/sale/SL'.mt_rand(1000, 9999).time())}}"><i class="bx bx-right-arrow-alt"></i>Sale currency</a>
+                <li> <a href="{{url('forex/sale/SL'.mt_rand(1000, 9999).time())}}"><i class="bx bx-right-arrow-alt"></i>Sell currency</a>
                 </li>
-                <li> <a href="{{url('forex/purchase/PC'.mt_rand(1000, 9999).time())}}"><i class="bx bx-right-arrow-alt"></i>Purchase currency</a>
+                <li> <a href="{{url('forex/purchase/PC'.mt_rand(1000, 9999).time())}}"><i class="bx bx-right-arrow-alt"></i>Buy currency</a>
                 </li>
                 <li> <a href="javascript:;"><i class="bx bx-right-arrow-alt"></i>Transactions history</a>
                     <ul>

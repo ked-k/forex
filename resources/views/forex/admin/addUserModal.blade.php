@@ -32,7 +32,7 @@
                             <input type="text" id="contact" class="form-control" name="contact" required value="{{ old('contact', '') }}">
                         </div> 
 
-                        <div class="mb-3 col-md-4">
+                        {{-- <div class="mb-3 col-md-4">
                             <label for="designation_id" class="form-label">Facility<span class="text-danger">*</span></label>
                             <select class="form-select" id="designation_id" name="designation_id" required>
                                 <option value="" selected>Select Role</option>                          
@@ -42,7 +42,7 @@
                                 @endforeach
                                 @endif
                             </select>
-                        </div>
+                        </div> --}}
                        
                     
                       
@@ -104,20 +104,7 @@
                                 <label for="contact2" class="form-label">Contact<span class="text-danger">*</span></label>
                                 <input type="text" id="contact2" class="form-control" name="contact" required value="{{$user->contact}}">
                             </div> 
-                        </div> <!-- end col -->
-                        <div class="mb-3 col-md-4">
-                            <label for="facility_id2" class="form-label">Facility <span class="text-danger">*</span></label>
-                            <select class="form-select" id="facility_id2" name="designation_id" required>
-                                @if ($user->location_name!=null)
-                                <option value="{{$user->facility_id}}" selected>{{$user->location_name}}</option>
-                                @else
-                                <option value="" selected>Select Facility</option>
-                                @endif
-                                @foreach ($locations as $facility)
-                                <option value="{{$facility->name}}">{{$facility->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        </div> 
                      
                             
                             <div class="mb-3 col-md-4">

@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Models\Role;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
 {
@@ -33,6 +34,24 @@ class RegisteredUserController extends Controller
     public function create()
     {
         return view('auth.register');
+    }
+
+    public function deleteUser($id)
+    {
+        try {
+            DB::transaction(function () use ($id) {
+               $user = User::where('id',$id)->delete();
+               return redirect()->back()->with('success', 'User Record Successfully deleted!!');
+            });
+        } catch (\Exception $error) {
+            $user = User::where('id',$id)->first();
+            if($user){
+                $user->is_active = 0;
+                $user->update();
+                return redirect()->back()->with('success', 'User Record can not be deleted but was Successfully suspended!!');
+            }
+            return redirect()->back()->with('warning', 'User Record can not found');
+        }
     }
 
     /**
@@ -72,9 +91,9 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'full_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             //'password' => ['required'],
-            'designation_id' => ['required'],
+            // 'designation_id' => ['required'],
             'contact' => ['string', 'max:20'],
             'is_active' => ['required', 'integer', 'max:3'],
         ]);
