@@ -40,7 +40,7 @@
                                                     @endforeach
                                                     @endif
                                                     </select>
-                                                    <input type="text" placeholder="buying rate"  class="form-control"  name="rate" id="rate" required onchange="fill3()">
+                                                    <input type="number" step="any" placeholder="buying rate"  class="form-control" min="1"  name="rate" id="rate" required onchange="fill3()">
                                                     <input type="hidden" placeholder="buying rate"  class="form-control"  name="rate2" id="rate2" required>
                                                 </div>
                                                 <script>
@@ -127,7 +127,7 @@
                                              <div class="col-sm-3">
                                                  <div class="text-sm">
                                                      <label>Deposit Amount (Foreign)</label>
-                                                     <input type="text" class="form-control" onchange="fill2()" value="0" min="0" required name="total_foreign" id="total_foreign">
+                                                     <input type="number" step="any" class="form-control" onchange="fill2()" value="0" min="0" required name="total_foreign" id="total_foreign">
                                                  </div>
                                              </div><!-- end col-->
                                              <div class="col-sm-3">
@@ -139,7 +139,7 @@
                                              <div class="col-sm-3">
                                                 <div class="text-sm">
                                                     <label>Charges (Foreign)</label>
-                                                    <input type="text" class="form-control" onchange="fill2()" value="0" min="0" required name="charges" id="mycharges">
+                                                    <input type="number" step="any" class="form-control" onchange="fill2()" value="0" min="0" required name="charges" id="mycharges">
                                                 </div>
                                             </div><!-- end col-->
                                              <div class="col-sm-3">
