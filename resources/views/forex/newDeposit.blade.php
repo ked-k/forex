@@ -144,7 +144,7 @@
                                             </div><!-- end col-->
                                              <div class="col-sm-3">
                                                  <div class="text-sm">
-                                                     <label>Total Amount</label>
+                                                     <label>Total Deposited</label>
                                                      <input type="text" readonly required class="form-control" name="total_amount" id="total_amount">
                                                  </div>
                                              </div>
