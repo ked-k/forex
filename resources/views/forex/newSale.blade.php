@@ -140,7 +140,7 @@
                                         <label>Receiving Account</label>
                                         <select class="single-select form-select" name="to_id" id="to_id" required>
                                             <option value="">Select Account</option>
-                                            @foreach ($accounts->where('currency_name','UGX') as $item)
+                                            @foreach ($accounts->where('currency_name', 'UGX') as $item)
                                                 <option value="{{ $item->actId }}">
                                                     {{ $item->account_name . '  (' . $item->currency_name . ')' }}</option>
                                             @endforeach
@@ -155,53 +155,46 @@
                                 <script>
                                     $(document).ready(function() {
                                         $('#from_id').change(function() {
+                                            var selectedAccountId = $(this).val();
 
-                                            var acct1 = $(this).val();
-                                            document.getElementById('avamount').value = 0;
-                                            document.getElementById("total_foreign").value = 0;
-                                            document.getElementById("initial_amount").value = 0;
-                                            document.getElementById("total_amount").value = 0;
-                                            document.getElementById('from_acct').value = "";
-                                            // $("#supplier").empty();
-                                            if (acct1) {
+                                            resetFormFields();
+
+                                            if (selectedAccountId) {
                                                 $.ajax({
                                                     type: "GET",
-                                                    url: "{{ url('forex/transfer/getAcct1') }}?act_id=" + acct1,
+                                                    url: "{{ url('forex/transfer/getAcct1') }}?act_id=" + selectedAccountId,
                                                     success: function(response) {
-
-                                                        var len = 0;
-                                                        if (response['data'] != null) {
-                                                            len = response['data'].length;
+                                                        if (response && response.data && response.data.length > 0) {
+                                                            processData(response.data[0]);
                                                         }
-
-                                                        if (len > 0) {
-                                                            // Read data and create <option >
-                                                            for (var i = 0; i < len; i++) {
-                                                                var newRate = document.getElementById("rate2").value - 0;
-                                                                var acct1 = response['data'][i].account_number;
-                                                                var exrate = response['data'][i].usd_exrate;
-                                                                var balance1 = response['data'][i].available_balance;
-                                                                var actual = balance1 / newRate;
-                                                                var balance = actual * exrate
-                                                                var urate1 = balance * exrate;
-
-                                                                // document.getElementById('avamountForegin').value = actual.toFixed(2);
-                                                                document.getElementById('avamount').value = balance1.toFixed(2);
-                                                                document.getElementById('total_amount').value = 0;
-                                                                document.getElementById('from_acct').value = acct1;
-
-
-                                                            }
-                                                        }
+                                                    },
+                                                    error: function(xhr, status, error) {
+                                                        console.error("AJAX Error:", error);
                                                     }
                                                 });
-                                            } else {
-                                                document.getElementById('avamount').value = 0;
-                                                document.getElementById('total_amount').value = 0;
-                                                document.getElementById('from_acct').value = "";
                                             }
                                         });
                                     });
+
+                                    function resetFormFields() {
+                                        $('#avamount').val(0);
+                                        $('#total_foreign').val(0);
+                                        $('#initial_amount').val(0);
+                                        $('#total_amount').val(0);
+                                        $('#from_acct').val("");
+                                    }
+
+                                    function processData(data) {
+                                        var newRate = parseFloat($('#rate2').val());
+                                        var acctNumber = data.account_number;
+                                        var exRate = parseFloat(data.usd_exrate);
+                                        var balance1 = parseFloat(data.available_balance);
+                                        var actual = balance1 / newRate;
+                                        var balance = actual * exRate;
+
+                                        $('#avamount').val(balance1.toFixed(2));
+                                        $('#from_acct').val(acctNumber);
+                                    }
                                 </script>
                             </div>
 
@@ -217,8 +210,8 @@
                                 <div class="col-sm-3">
                                     <div class="text-sm">
                                         <label> Sale Amount (UGX)</label>
-                                        <input type="text" readonly class="form-control" id="initial_amount" onchange="fill()"
-                                            required name="initial_amount">
+                                        <input type="text" readonly class="form-control" id="initial_amount"
+                                            onchange="fill()" required name="initial_amount">
                                     </div>
                                 </div><!-- end col-->
 
