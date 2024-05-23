@@ -42,7 +42,7 @@
 
                                 </div>
                                 <div class="col-sm-9">
-                                    <label class="form-label">Select Currency</label>
+                                    <label class="form-label">Currency</label>
                                     <div class="input-group">
                                         <select class="single-select form-select" name="currency" id="currency" required>
                                             <option value="">Select</option>
