@@ -137,9 +137,10 @@
                     <li><a class="dropdown-item" href="javascript:;"><i class="bx bx-cog"></i><span>Settings</span></a>
                     </li>
                     </li>
-                    <li><a class="dropdown-item" onclick="return confirm('Are you sure you want to reset this database? Take note that This action can not be undone');" href="{{url('forex/reset')}}"><i class='bx bx-transfer'></i><span>Reset Database</span></a>
-                    </li>
-
+                    @if(Auth::user()->hasPermission(['operations-delete']))
+                        <li><a class="dropdown-item" onclick="return confirm('Are you sure you want to reset this database? Take note that This action can not be undone');" href="{{url('forex/reset')}}"><i class='bx bx-transfer'></i><span>Reset Database</span></a>
+                        </li>
+                    @endif
                     <li>
                         <div class="dropdown-divider mb-0"></div>
                     </li>

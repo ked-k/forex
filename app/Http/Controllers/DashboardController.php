@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Transactions;
-use App\Models\Transfer;
 use App\Models\Account;
 use App\Models\Currency;
 use App\Models\customer;
 use App\Models\Payement;
 use App\Models\supplier;
+use App\Models\Transfer;
 use App\Models\Expenditure;
-use App\Models\capitalTransactions;
-use Illuminate\Support\Facades\Artisan;
+use App\Models\Transactions;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\capitalTransactions;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
 
 class DashboardController extends Controller
 {
@@ -108,31 +109,32 @@ class DashboardController extends Controller
      */
     public function reset()
     {
+        if(Auth::user()->hasPermission(['operations-delete'])){
         DB::statement("SET foreign_key_checks=0");
-        // Artisan::call('backup:run');
-        // $path = storage_path('mydbbackup/*');
-        // $latest_ctime = 0;
-        // $latest_filename = '';
-        // $files = glob($path);
-        // foreach($files as $file)
-        // {
-        //         if (is_file($file) && filectime($file) > $latest_ctime)
-        //         {
-        //                 $latest_ctime = filectime($file);
-        //                 $latest_filename = $file;
-        //         }
-        // }
-        Currency::truncate();
-        Account::truncate();
-        Expenditure::truncate();
-        Transactions::truncate();
-        Transfer::truncate();
-        customer::truncate();
-        supplier::truncate();
-        Payement::truncate();
-        capitalTransactions::truncate();
+        // Currency::truncate();
+        // Account::truncate();
+        // Expenditure::truncate();
+        // Transactions::truncate();
+        // Transfer::truncate();
+        // customer::truncate();
+        // supplier::truncate();
+        // Payement::truncate();
+        // capitalTransactions::truncate();
+        DB::statement("TRUNCATE capital_transactions;");
+         DB::statement("TRUNCATE currencies;"); 
+         DB::statement("TRUNCATE expenditures;"); 
+         DB::statement("TRUNCATE losses;"); 
+         DB::statement("TRUNCATE payements;"); 
+         DB::statement("TRUNCATE rate_logs;"); 
+         DB::statement("TRUNCATE transactions;"); 
+         DB::statement("TRUNCATE transfers;");
+         DB::statement("UPDATE suppliers SET balance = '0'");
+         DB::statement("UPDATE customers SET balance = '0' ");
+         DB::statement("UPDATE accounts SET available_balance = '0', foreign_amount = 0;");
         DB::statement("SET foreign_key_checks=1");
-        return redirect('forex/dashboard')->with('success', 'All Records where successfully deleted !!');
+        return redirect('forex/dashboard')->with('success', 'All Records where successfully deleted !!');}else{
+            return redirect('forex/dashboard')->with('error', 'you have no permission to clear these records !!');
+        }
     }
 
     /**
