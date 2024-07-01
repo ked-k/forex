@@ -49,7 +49,7 @@ class AccountController extends Controller
     {
 
         $request->validate([
-         'account_name'=> 'required',
+         'account_name'=> 'required|unique:accounts',
         'account_number'=> 'required',
         'default_currency'=> 'required',
         'account_type'=> 'required',
