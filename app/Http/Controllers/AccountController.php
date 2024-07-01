@@ -66,7 +66,7 @@ class AccountController extends Controller
             Account::create($request->all());
         }
 
-        return redirect()->route('accounts')->with('success','Record created successfully!!');
+        return redirect()->back()->with('success','Record created successfully!!');
     }
 
     /**
