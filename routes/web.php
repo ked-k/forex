@@ -34,7 +34,7 @@ Route::group(['namespace' => 'forex','middleware' => ['auth','role:superadminist
 
 
     //------------------------------------account routes-------------------------------------------------
-    Route::get('/accounts', [App\Http\Controllers\AccountController::class, 'index']);
+    Route::get('/accounts', [App\Http\Controllers\AccountController::class, 'index'])->name('forex.accounts');
     Route::get('/accounts/balances', [App\Http\Controllers\AccountController::class, 'index2']);
     Route::post('/accounts/add', [App\Http\Controllers\AccountController::class, 'store']);
     Route::get('/accounts/delete/{id}', [App\Http\Controllers\AccountController::class, 'destroy']);
