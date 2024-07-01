@@ -64,9 +64,9 @@ class AccountController extends Controller
         }else{
 
             Account::create($request->all());
+            return redirect()->back()->with('success','Record created successfully!!');
         }
 
-        return redirect()->back()->with('success','Record created successfully!!');
     }
 
     /**
