@@ -58,6 +58,10 @@ class AccountController extends Controller
         'user_id'=> 'required',
         ]);
 
+        $record =Account::where('account_name',$request->Account)->first();
+        if($record){
+            return redirect()->back()->with('warning','Not saved! Integrity constraint violation: 1062 Duplicate entry for account name!');
+        }
         Account::create($request->all());
 
         return redirect()->back()->with('success','Record created successfully!!');
