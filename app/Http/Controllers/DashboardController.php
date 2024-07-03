@@ -121,7 +121,7 @@ class DashboardController extends Controller
         // Payement::truncate();
         // capitalTransactions::truncate();
         DB::statement("TRUNCATE capital_transactions;");
-         DB::statement("TRUNCATE currencies;"); 
+         DB::statement("TRUNCATE accounts;"); 
          DB::statement("TRUNCATE expenditures;"); 
          DB::statement("TRUNCATE losses;"); 
          DB::statement("TRUNCATE payements;"); 
