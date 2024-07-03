@@ -121,7 +121,7 @@ class DashboardController extends Controller
         // Payement::truncate();
         // capitalTransactions::truncate();
         DB::statement("TRUNCATE capital_transactions;");
-         DB::statement("TRUNCATE accounts;"); 
+        //  DB::statement("TRUNCATE currencies;"); 
          DB::statement("TRUNCATE expenditures;"); 
          DB::statement("TRUNCATE losses;"); 
          DB::statement("TRUNCATE payements;"); 
@@ -130,6 +130,7 @@ class DashboardController extends Controller
          DB::statement("TRUNCATE transfers;");
          DB::statement("UPDATE suppliers SET balance = '0'");
          DB::statement("UPDATE customers SET balance = '0' ");
+         DB::statement("UPDATE accounts SET currencies = '0', buying_rate = 0;");
          DB::statement("UPDATE accounts SET available_balance = '0', foreign_amount = 0;");
         DB::statement("SET foreign_key_checks=1");
         return redirect('forex/dashboard')->with('success', 'All Records where successfully deleted !!');}else{
