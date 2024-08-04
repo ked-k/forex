@@ -55,7 +55,7 @@
                                                     <td>{{ $value->currency_name}}</td>
                                                     <td>@money($value->rate)</td>
                                                     <td>@money($value->total_amount)</td>
-                                                    <td>@money($value->total_amount*$value->rate)</td>
+                                                    <td>@money($value->foreign_amount)</td>
                                                     <td>@money($value->charges)</td>
                                                     <td>{{ $value->date_added}}</td>
                                                     <td>{{ $value->sale_type}}</td>
