@@ -59,7 +59,7 @@
                                                     <td>{{ $value->name}}</td>
                                                     <td>{{ $value->currency_name}}</td>
                                                     <td>@money($value->rate)</td>
-                                                    <td>@money($value->foreign_amount)</td>
+                                                    <td>@money($value->total_amount*$value->total_amount)</td>
                                                     <td>@money($value->charges)</td>
                                                     <td>@money($value->total_amount) <input type="hidden" value="{{$value->total_amount}}" name="amount"></td>
                                                     <td class="table-action">
